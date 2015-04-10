@@ -1,0 +1,19 @@
+(G40_14p5G_LR_Tx
+   (Description "LSI G40 14.5Gbps Long Reach transmitter model.")
+   (Reserved_Parameters
+      (Ignore_Bits (Usage Info) (Type Integer) (Default 4) (Description "Ignore four bits to fill up tapped delay line."))
+      (Max_Init_Aggressors (Usage Info) (Type Integer) (Default 25) (Description "Number of aggressors is actually unlimited."))
+      (Init_Returns_Impulse (Usage Info) (Type Boolean) (Default True) (Description "Both impulse and parameters_out returned."))
+      (GetWave_Exists (Usage Info) (Type Boolean) (Default True) (Description "GetWave is well and truly provided in the module."))
+      (Use_Init_Output (Usage Info) (Type Boolean) (Default False) (Description "Do not use init output to modify getwave input."))
+      (Tx_Jitter (Usage Info) (Type Float) (Format Gaussian 0 0) (Default 0 0) (Description "TX Jitter"))
+      (Tx_DCD (Usage Info) (Type Float) (Format Value 0) (Default 0) (Description "TX DCD"))
+   ) | End Reserved_Parameters
+   (Model_Specific
+      (CPre2 (Usage In) (Type Integer) (Default 0) (Format Range 0 0 3) (Description "Pre Cursor Tap 2 Weight Register Setting."))
+      (CPre1 (Usage In) (Type Integer) (Default 2) (Format Range 2 0 7) (Description "Pre Cursor Tap 1 Weight Register Setting."))
+      (CMain (Usage In) (Type Integer) (Default 8) (Format Range 8 0 31) (Description "Main Cursor Tap Weight Register Setting."))
+      (CPost (Usage In) (Type Integer) (Default 5) (Format Range 5 0 15) (Description "Post Cursor Tap Weight Register Setting."))
+      (DATA_RATE (Usage In) (Type Integer) (Default 0) (Format Range 0 0 2 ) (Description "0=8.25-14.5Gbs, 1=4.125-7.25Gbs, 2=2.0625-3.625Gbs"))
+   ) | End Model_Specific
+) | End G40_14p5G_LR_Tx

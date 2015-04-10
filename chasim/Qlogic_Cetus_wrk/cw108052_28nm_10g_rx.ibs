@@ -1,0 +1,88 @@
+|***************************************************************************
+|               LSI G28 10G IBIS-AMI Receiver Model
+|***************************************************************************
+|
+[IBIS Ver]   5.0
+|
+[Disclaimer] THIS IBIS MODEL HAS BEEN CREATED BY THE SIGNAL
+             INTEGRITY SOFTWARE SPICE WRAPPING PROCESS.
+             THESE IBIS MODELS AREPROVIDED "AS IS" WITH NO
+             WARRANTY WHATSOEVER AND SIGNAL INTEGRITY SOFTWARE
+             SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTIES OF
+             MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+             OR AGAINST INFRINGEMENT.
+|
+[File Name]  cw108052_28nm_10g_rx.ibs
+|
+[File Rev]   2.0
+|
+[Date]       10/26/2012
+|
+[Source]     Signal Integrity Software
+|
+[Notes]      Revision History
+Rev 0.1 - 04/11/2012 Initial Release
+Rev 1.0 - 06/15/2012 linear model 
+Rev 1.9 - 09/07/2012 SiSoft
+           - Preliminary RX AMI model supports both statistical and time domain.
+           - File passes ibischk v5.0.7 with 0 errors and 0 warnings.
+Rev 2.0 - 10/26/2012 SiSoft
+           - Final RX AMI model supports both statistical and time domain.
+           - File passes ibischk v5.0.7 with 0 errors and 0 warnings.
+           - This IBIS AMI model has been certified by Signal Integrity
+                 Software Inc. (SiSoft) on 10/26/2012.
+              - See IBIS model certification report for more details:
+                LSI_G28_10G_Rx_AMI_Model_Certification_Report_r1p0.pdf
+
+|
+[Copyright]  Copyright 2012, Signal Integrity Software, All Rights Reserved.
+|
+|***************************************************************************
+|                       COMPONENT: CW108052_RX
+|***************************************************************************
+[Component] CW108052_RX
+[Manufacturer] LSI
+|
+[Package]
+|| External package model supplied by LSI
+R_pkg 0.001m   NA      NA
+L_pkg 0.001nH  NA      NA
+C_pkg 0.001pF  NA      NA
+|
+[Pin] signal_name    model_name    R_pin L_pin  C_pin
+1p    G28_10G_Rx     G28_10G_Rx
+1n    G28_10G_Rx_L   G28_10G_Rx
+|
+|***************************************************************************
+|
+[Diff_Pin] inv_pin vdiff tdelay_typ tdelay_min tdelay_max
+1p         1n      0.1V  NA         NA         NA
+|
+|***************************************************************************
+|***************************************************************************
+|***************************************************************************
+|                       MODEL: G28_10G_Rx
+|***************************************************************************
+[Model]    G28_10G_Rx
+Model_type Input
+|
+C_comp 0.380p 0.380p 0.380p
+Vinh = 0.55
+Vinl = 0.45
+|
+[Algorithmic Model]
+Executable Linux_gcc4.1.1_32 G28_10G_Rx.linux.so g28_10g_rx.ami
+Executable Windows_VisualStudio7.1.3088_32 G28_10G_Rx.dll g28_10g_rx.ami
+|
+[End Algorithmic Model]
+|
+[Temperature Range] 65 -40 125
+|
+[Voltage Range] 0.9 0.81 0.945
+|
+[GND Clamp]
+-2.5 -0.05 -0.05 -0.05
+ 0.0  0.00  0.00  0.00
+ 2.5  0.05  0.05  0.05
+|
+[END]

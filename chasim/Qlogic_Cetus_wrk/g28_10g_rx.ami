@@ -1,0 +1,197 @@
+(G28_10G_Rx
+   (Description "LSI G28 10G receiver model") 
+     |Revision 1.9 -- 09/07/2012
+     |   Preliminary RX AMI model supports both statistical and time domain.
+     |Revision 2.0 -- 10/26/2012
+     |   RX AMI model supports both statistical and time domain.
+
+   (Reserved_Parameters
+      (Ignore_Bits (Usage Info) (Type Integer) (Default 200000)
+         (Description "DFE may take 200,000 bits to converge."))
+      (Max_Init_Aggressors (Usage Info) (Type Integer) (Default 25)
+         (Description "Number of aggressors is actually unlimited."))
+      (Init_Returns_Impulse (Usage Info) (Type Boolean) (Default True)
+         (Description "Both impulse and parameters_out returned."))
+      (GetWave_Exists (Usage Info) (Type Boolean) (Default True)
+         (Description "GetWave is well and truly provided in the module."))
+      (Use_Init_Output (Usage Info) (Type Boolean) (Default False)
+         (Description "GetWave and Init function indpendent of each other."))
+      (Rx_Receiver_Sensitivity (Usage Info) (Type Float) (Format Value 0.030)
+         (Description "The receiver sensitivity at the data decision point."))
+   ) | End Reserved_Parameters
+
+   (Model_Specific
+
+| RX LE section
+      (LEGAIN_mode (Usage In)
+                   (Type String)
+                   (Default "Adapt")
+                   (Format List "Fixed" "Adapt")
+                   (Description "LEGAIN control enable.
+                                 Fixed: Use value defined by LEGAIN.
+                                 Adapt: Begin with value determined during initialization, then fully adaptive.")
+      )
+      (LEGAIN (Usage InOut)
+              (Type Integer)
+              (Default 0)
+              (Format List 0 1 2 3 4 5 6 7 8 9
+                           10 11 12 13 14 15 16 17 18 19
+                           20 21 22 23 24 25 26 27 28 29
+                           30 31)
+              (Description "Linear equalizer seed value")
+      )
+
+| RX VGA section 
+      (AGC_mode (Usage In)
+                (Type String)
+                (Default "Adapt")
+                (Format List "Fixed" "Adapt")
+                (Description "AGC control enable.
+                              Fixed: Use value defined by AGC.
+                              Adapt: Begin with value determined during initialization, then fully adaptive.")
+      )
+      (AGC (Usage InOut)
+           (Type Integer)
+           (Default 10)
+           (Format List 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
+           (Description "AGC seed value")
+      )
+
+| DFE Status     
+      (DFE_mode (Usage In)
+                (Type String)
+                (Default "Adapt")
+                (Format List "Fixed" "Adapt")
+                (Description "DFE control enable.
+                              Fixed: Use values defined by H1V through H6V.
+                              Adapt: Begin with values determined during initialization, then fully adaptive.")
+      )
+      (H1V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 
+                        19 20 21 22 23 24 25 26 27 28 29 30 31)
+           (Description "DFE tap 1 seed value")
+      )        
+
+      (H2V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List -15 -14 -13 -12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 
+                        -1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
+           (Description "DFE tap 2 seed value")
+      )        
+
+      (H3V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7)
+           (Description "DFE tap 3 seed value")
+      )       
+
+      (H4V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7)
+           (Description "DFE tap 4 seed value")
+      )        
+      
+      (H5V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7)
+           (Description "DFE tap 5 seed value")
+      )        
+
+      (H6V (Usage InOut)
+           (Type Integer)
+           (Default 0)
+           (Format List -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7)
+           (Description "DFE tap 6 seed value")
+      )        
+                
+      (PVT (Usage In)
+           (Type Integer)
+           (Default 0)
+           (Format Corner 0 2 1)
+           (Description "PVT corner: 0=TT, 1=FF, 2=SS")
+      )
+
+      (IQskew (Usage In)
+              (Type Integer)
+              (Default 8)
+              (Format List 0 1 2 3 4 5 6 7 8 
+                           9 10 11 12 13 14 15 16)
+              (Description "IQ clock skew 0-UI to -0.25-UI")
+      )
+
+      (Reference_Clock
+         (Offset (Usage In)
+                 (Type Float)
+                 (Default 0.0)
+                 (Format Range 0.0 -3.0e-4 3.0e-4)
+                 (Description "Reference clock offset as a fraction of the ref clock frequency"))
+      )
+
+| Parameters for output parameter string
+      (Target   (Usage Out)
+                (Type Integer)
+                (Format Range 27 0 63)
+                (Description "Target switching threshold index"))
+      (CdrPhase (Usage Out)
+                (Type Integer)
+                (Format Range 0 -31 31)
+                (Description "CDR Phase"))
+      (AGCV     (Usage Out)
+                (Type Float)
+                (Format Range 1.0 0.0 2.0)
+                (Description "AGC voltage value"))
+      (TargetV  (Usage Out)
+                (Type Float)
+                (Format Range 0.141 0.060 0.249)
+                (Description "Target switching threshold voltage"))
+      (H1_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 1st DFE tap"))
+      (H2_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 2nd DFE tap"))
+      (H3_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 3rd DFE tap"))
+      (H4_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 4th DFE tap"))
+      (H5_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 5th DFE tap"))
+      (H6_V     (Usage Out)
+                (Type Float)
+                (Format Range 0.0 -0.2 0.2)
+                (Description "Voltage on 6th DFE tap"))
+
+| Parameters for clock modeling
+      (Rx_Clock_Recovery_Mean (Usage Out)
+                              (Type Float)
+                              (Format Range 0.0 -0.25 0.25)
+                              (Description "Static timing offset set by IQskew"))
+
+| Set jitter parameters per IBIS BIRD 123:
+      (Rx_Clock_Recovery_Rj   (Usage Info)
+                              (Type UI)
+                              (Format Value 0.012)
+                              (Description "Clock jitter for statistical analysis"))
+
+| Set the analog model parameters per IBIS BIRD 122:
+      (Rt  (Corner 50.0 50.0 50.0) (Usage Info) (Type Float) (Description "Receiver Termination value"))
+      (Vt  (Corner 0.450 0.405 0.473) (Usage Info) (Type Float) (Description "Receiver Termination voltage"))
+      (Cc  (Corner 3.80e-13 3.80e-13 3.80e-13) (Usage Info) (Type Float) (Description "Receiver input capacitance"))
+
+   ) | End Model_Specific
+   
+) | G28_10G_Rx

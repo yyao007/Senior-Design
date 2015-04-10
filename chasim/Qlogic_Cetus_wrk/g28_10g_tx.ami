@@ -1,0 +1,56 @@
+(G28_10G_Tx
+   (Description "LSI G28 10Gbps transmitter model")
+
+   (Reserved_Parameters
+      (Ignore_Bits (Usage Info) (Type Integer) (Default 4)
+         (Description "Ignore four bits to fill up tapped delay line."))
+      (Max_Init_Aggressors (Usage Info) (Type Integer) (Default 25)
+         (Description "Number of aggressors is actually unlimited."))
+      (Init_Returns_Impulse (Usage Info) (Type Boolean) (Default True)
+         (Description "Both impulse and parameters_out returned."))
+      (GetWave_Exists (Usage Info) (Type Boolean) (Default True)
+         (Description "GetWave is well and truly provided in the module."))
+      |(Use_Init_Output (Usage Info) (Type Boolean) (Default False)
+      |   (Description "Do not use init output to modify getwave input."))
+   ) | End Reserved_Parameters
+
+   (Model_Specific
+
+      (CPre1 (Usage In)
+             (Type Integer)
+             (Default 0)
+             (Format List 0 1 2 3 4 5 6 7 8)
+             (Description "Pre Cursor Tap 1 Weight Register Setting.")
+      )
+      
+      (CMain (Usage In)
+             (Type Integer)
+             (Default 0)
+             (Format List 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)
+             (Description "Main Cursor Tap Weight Register Setting.")
+      )
+
+      (CPost (Usage In)
+             (Type Integer)
+             (Default 0)
+             (Format List 0 1 2 3 4 5 6 7 8 9 10 11 12)
+             (Description "Post Cursor Tap Weight Register Setting.")
+      )
+      
+      (PVT (Usage In)
+           (Type Integer)
+           (Default 0)
+           (Format Corner 0 2 1)
+           (Description "PVT Corner 0=Typ, 1=Fast, 2=Slow")
+      )
+
+      (PCIe (Usage In)
+            (Type Integer)
+            (Default -1)
+            (Format List -1 0 1 2 3 4 5 6 7 8 9)
+            (Description "KR=-1 others are PCIe presets Pn where n=0 to 9")
+      )
+
+   ) | End Model_Specific
+
+) | End G28_10G_Tx

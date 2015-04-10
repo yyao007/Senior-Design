@@ -1,0 +1,25 @@
+(G40_14p5G_LR_HyperPHY_Rx
+   (Description "LSI G40 14.5Gbps long reach receiver model")
+   (Reserved_Parameters
+      (Ignore_Bits (Usage Info) (Type Integer) (Default 100000) (Description "DFE may take 100,000 bits to converge."))
+      (Max_Init_Aggressors (Usage Info) (Type Integer) (Default 25) (Description "Number of aggressors is actually unlimited."))
+      (Init_Returns_Impulse (Usage Info) (Type Boolean) (Default True) (Description "Both impulse and parameters_out returned."))
+      (GetWave_Exists (Usage Info) (Type Boolean) (Default True) (Description "GetWave is well and truly provided in the module."))
+      (Use_Init_Output (Usage Info) (Type Boolean) (Default False) (Description "GetWave and Init function indpendent of each other."))
+   ) | End Reserved_Parameters
+   (Model_Specific
+      (LEGAIN (Usage In) (Type Integer) (Default 0) (Format Range 0 0 63) (Description "Linear equalizer seed"))
+      (AGC (Usage In) (Type Integer) (Default 9) (Format Range 9 0 15) (Description "AGC/VGA seed"))
+      (H1V (Usage In) (Type Integer) (Default 5) (Format Range 5 0 31) (Description "DFE tap 1 seed")) 
+      (H2V (Usage In) (Type Integer) (Default 0) (Format Range 0 -15 15) (Description "DFE tap 2 seed")) 
+      (H3V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 3 seed"))
+      (H4V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 4 seed"))
+      (H5V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 5 seed"))
+      (H6V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 6 seed"))
+      (H7V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 7 seed"))
+      (H8V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 8 seed"))
+      (H9V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 9 seed"))
+      (H10V (Usage In) (Type Integer) (Default 0) (Format Range 0 -7 7) (Description "DFE tap 10 seed"))
+      (PVT (Usage In) (Type Integer) (Default 0) (Format Range 0 0 2) (Description "0=TT 1=FF 2=SS"))
+   ) | End Model_Specific
+) | G40_14p5G_LR_HyperPHY_Rx
