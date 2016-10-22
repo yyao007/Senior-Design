@@ -1,0 +1,12 @@
+1. change path in line 13 to 'C:\Users\Julius\Documents\MATLAB\_chasim_sent_to_UCR\data\SerDes_Models
+
+2. change path of addpath of line 28 to SYZ_conversions
+
+3. change snpimports() to importtsi() function **************** need to clarify
+
+4. change importtsi function file for using snp.data instead of snp.dat in structure
+
+5. error using .frelist "Error in snpinsertdc (line 74) snpo.freqlist(2:nfreq+1, 1) = freqlisti;"
+	I think its because snpo.freqlist(2:nfreq+1, 1) dimension is 4x1 and freqlisti dimension is 2000x1
+   Assuming fixing this is a solution:
+		use freqlisti(2:nfreq+1,1) may solve this error.   ****************** need to be clarified.

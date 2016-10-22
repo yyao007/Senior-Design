@@ -12,7 +12,9 @@ seqlength = 10000;   % length of random sequence bits
 
 
 %% setup IBIS AMI model path and filename:
-modelpath = 'C:\Users\Julius\Documents\MATLAB\Senior Design A1\codes\Package\ADS';
+
+rootpath = pwd;
+modelpath = fullfile(rootpath, '../Model_File');
 tx_amifilename = 'g28_28g_tx.ami';
 rx_amifilename = 'g28_28g_rx.ami';
 tx_dllfilename = 'G28_28G_Tx_32.dll';
@@ -26,13 +28,11 @@ rx_dllfile = fullfile(modelpath, rx_dllfilename);
 addpath(modelpath)
 
 %% get channel impulse response 
-addpath('C:\Users\Julius\Documents\MATLAB\Senior Design A1\codes\Package\impulse_response_oct2012\impulse_response_oct2012');
-addpath('C:\Users\Julius\Documents\MATLAB\Senior Design A1\codes\Package\SYZ_conversions\SYZ_conversions');
-s4ppath = 'C:\Users\Julius\Documents\MATLAB\Senior Design A1\codes\Package\data';
+addpath(fullfile(rootpath, '../previous_codes'));
+addpath(fullfile(rootpath, '../previous_codes/Get_Impulse_Response'));
+addpath(fullfile(rootpath, '../previous_codes/SYZ_conversions'));
 
-SNP_ADSname = 'snpo.s4p';
-SNP_ADSfile= fullfile(s4ppath, SNP_ADSname);
-
+s4ppath = modelpath;
 SNP1_s4pname = 'm_qlogic_baker_e049_fc_tx0_shrt.s4p';
 SNP1_s4pfile = fullfile(s4ppath, SNP1_s4pname);
 
@@ -42,7 +42,6 @@ SNP2_s4pfile = fullfile(s4ppath, SNP2_s4pname);
 SNP3_s4pname = 'm_qlogic_baker_e049_fc_rx0_shrt.s4p';
 SNP3_s4pfile = fullfile(s4ppath, SNP3_s4pname);
 
-SNP_ADS = tsnpimporti(SNP_ADSfile);
 SNP1_s4pstruct = tsnpimporti(SNP1_s4pfile);
 SNP2_s4pstruct = tsnpimporti(SNP2_s4pfile);
 SNP3_s4pstruct = tsnpimporti(SNP3_s4pfile);
@@ -83,7 +82,7 @@ fq = SNP2_s4pstruct0.freqlist;
 tinterp = 0:sample_step:5000*sample_step;
 [channel_impres, e2, em2] = wavesample(tlist,impresi, tinterp);
 
-plot(tinterp, channel_impres,'--rs', tlist, impresi,'-.bo');   
+plot(tinterp, channel_impres,'--rs', tlist, impresi,'-.bo');
 title('Impulse Response');
 xlabel('Time');
 ylabel('Impulse');
@@ -116,11 +115,6 @@ end
 [ret0, impresotx, pario, amiparo, mhtx, amimsg ] = ...
     calllib(dllname, 'AMI_Init', channel_impres, row_size, aggressors-1, sample_step, bit_time, ...
             amipari, amiparo_ptrptr, amimemhdl_ptrptr, amimsg_ptrptr);
-        
-
-
-
-
 pauseanchor=1;
 
 % [ impresotx, amiparotx, mhtx, initmsgtx, errtx, errmsgtx ] = amiinit_1207a(tx_amifile, tx_dllfile, channel_impres, sample_step, bit_time);
@@ -158,9 +152,6 @@ end
 [ret0, impresorx, pario, amiparo, mhrx, amimsg ] = ...
     calllib(dllname_rx, 'AMI_Init', impresotx, row_size, aggressors-1, sample_step, bit_time, ...
             amipari, amiparo_ptrptr1, amimemhdl_ptrptr1, amimsg_ptrptr1);
-    
-    
-
 pauseanchor=1;
 
 plot(tinterp, channel_impres,'--rs', tinterp, impresotx','-.bo', tinterp, impresorx,':md');

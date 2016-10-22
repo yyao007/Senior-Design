@@ -32,25 +32,24 @@ end
 [dllpath, dllname, dllext] = fileparts(dllfile);
 addpath(dllpath);
 
-lload = loadlibrary(dllfile);
-isloadedok = libisloaded(dllname);
-libfun = libfunctions(dllname, '-full');
+if ~libisloaded(dllname)
+   loadlibrary(dllfile);
+end
+
+%libfun = libfunctions(dllname, '-full');
 
 
 [row_size,aggressors] = size(impresi);
+amiparo_ptrptr = libpointer('stringPtrPtr',{''});
+amimemhdl_ptrptr = libpointer('voidPtrPtr',[]);
+amimsg_ptrptr = libpointer('stringPtrPtr',{''});
 
-amiparo_ptrptr = libpointer('stringPtrPtr', {''});
-amimemhdl_ptrptr = libpointer('voidPtrPtr', []);
-amimsg_ptrptr = libpointer('stringPtrPtr', {''});
-
-[ret0, impreso, pario, amiparo, amimemhdl, amimsg ] = ...
+[~, impreso, ~, amiparo, amimemhdl, amimsg ] = ...
     calllib(dllname, 'AMI_Init', impresi, row_size, aggressors-1, tstep, bittime, ...
             amipari, amiparo_ptrptr, amimemhdl_ptrptr, amimsg_ptrptr);
-       
+      
 %[long, doublePtr, cstring, stringPtrPtr, voidPtrPtr, stringPtrPtr
-pauseanchor=1;
-
-
+%pauseanchor=1;
 
 end
 
